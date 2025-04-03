@@ -1,5 +1,7 @@
 <?php
 
+include('config/db_connection.php');
+
 // Initialize variables to store form input values as empty strings
 $email = $title = $ingredients = '';
 
@@ -53,7 +55,33 @@ if (isset($_POST['submit'])) {
       $errors['ingredients'] = 'Ingredients must be a comma separated list';
     }
   }
-} // end POST check
+
+  // Check if there are no errors in the form data
+  if (!array_filter($errors)) {
+
+    // Sanitize and escape the submitted title to prevent SQL injection
+    $title = mysqli_real_escape_string($conn, $_POST['title']);
+
+    // Sanitize and escape the submitted ingredients to prevent SQL injection
+    $ingredients = mysqli_real_escape_string($conn, $_POST['ingredients']);
+
+    // Sanitize and escape the submitted email to prevent SQL injection
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+
+    // Create an SQL query to insert the sanitized form data into the pizzas table
+    $sql = "INSERT INTO pizzas (title, ingredients, email) VALUES ('$title', '$ingredients', '$email')";
+
+    // Execute the SQL query and check if it was successful
+    if (mysqli_query($conn, $sql)) {
+
+      header("Location: index.php"); // Redirect to the index page upon successful insertion
+      exit; // Terminate the script to ensure no further code is executed after the redirect
+
+    } else {
+      echo 'query error: ' . mysqli_error($conn); // Display an error message if the query execution fails
+    }
+  }
+}
 
 ?>
 

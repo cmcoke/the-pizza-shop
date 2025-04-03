@@ -1,21 +1,15 @@
 <?php
 
-// Connect to the database using MySQLi with the specified host, username, password, and database name
-$conn = mysqli_connect('localhost', 'admin', 'test1234', 'pizza_shop');
-
-// Check if the database connection was successful
-if (!$conn) {
-  // Output an error message if the connection failed
-  echo 'Connection error: ' . mysqli_connect_error();
-}
+// Include the database connection file to establish a connection with the database
+include('config/db_connection.php');
 
 // Write an SQL query to retrieve the title, ingredients, and ID from the 'pizzas' table and order it by the 'created_at' column
 $sql = 'SELECT title, ingredients, id FROM pizzas ORDER BY created_at';
 
-// Execute the SQL query and store the results
+// Execute the SQL query and store the results in the $results variable
 $results = mysqli_query($conn, $sql);
 
-// Fetch the resulting rows as an associative array
+// Fetch all rows from the result set as an associative array
 $pizzas = mysqli_fetch_all($results, MYSQLI_ASSOC);
 
 // Free up the memory associated with the result set
@@ -29,10 +23,10 @@ mysqli_close($conn);
 
 ?>
 
-
 <!DOCTYPE html>
 <html>
 
+<!-- Include the header template file -->
 <?php include('templates/header.php'); ?>
 
 <h4 class="center grey-text">Pizzas!</h4>
@@ -40,27 +34,35 @@ mysqli_close($conn);
 <div class="container">
   <div class="row">
 
+    <!-- Loop through each pizza in the $pizzas array and display it -->
     <?php foreach ($pizzas as $pizza) : ?>
 
+    <!-- Create a column for each pizza card -->
     <div class="col s6 md3">
       <div class="card z-depth-0">
         <div class="card-content center">
+          <!-- Display the pizza title, escaping any HTML characters -->
           <h6><?= htmlspecialchars($pizza['title']); ?></h6>
-          <div>
-            <?= htmlspecialchars($pizza['ingredients']); ?>
-          </div>
+          <ul>
+            <!-- Loop through each ingredient in the pizza and display it as a list item -->
+            <?php foreach (explode(',', $pizza['ingredients']) as $ingredent) : ?>
+            <li><?= htmlspecialchars($ingredent); ?></li>
+            <?php endforeach; ?>
+          </ul>
         </div>
         <div class="card-action right-align">
-          <a href="#" class="brand-text">more info</a>
+          <!-- Link to the details page for the specific pizza, passing the pizza ID as a query parameter -->
+          <a href="details.php?id=<?= $pizza['id']; ?>" class="brand-text">more info</a>
         </div>
       </div>
     </div>
 
-    <?php endforeach ?>
+    <?php endforeach; ?>
 
   </div>
 </div>
 
+<!-- Include the footer template file -->
 <?php include('templates/footer.php'); ?>
 
 </html>
