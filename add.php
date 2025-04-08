@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
   // Check if the 'email' field is empty
   if (empty($_POST['email'])) {
     // Store an error message if no email is provided
-    $errors['email'] = 'An email is required';
+    $errors['email'] = 'An email address must be provided';
   } else {
     // Sanitize and store the submitted email value
     $email = $_POST['email'];
@@ -22,14 +22,14 @@ if (isset($_POST['submit'])) {
     // Validate the email format using FILTER_VALIDATE_EMAIL
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       // Store an error message if the email format is invalid
-      $errors['email'] = 'Email must be a valid email address';
+      $errors['email'] = 'Please enter a valid email address';
     }
   }
 
   // Check if the 'title' field is empty
   if (empty($_POST['title'])) {
     // Store an error message if no title is provided
-    $errors['title'] = 'A title is required';
+    $errors['title'] = 'A title for the item must be provided';
   } else {
     // Sanitize and store the submitted title value
     $title = $_POST['title'];
@@ -37,14 +37,14 @@ if (isset($_POST['submit'])) {
     // Validate the title to allow only letters and spaces
     if (!preg_match('/^[a-zA-Z\s]+$/', $title)) {
       // Store an error message if the title contains invalid characters
-      $errors['title'] = 'Title must be letters and spaces only';
+      $errors['title'] = 'A title must only contain letters and spaces';
     }
   }
 
   // Check if the 'ingredients' field is empty
   if (empty($_POST['ingredients'])) {
     // Store an error message if no ingredients are provided
-    $errors['ingredients'] = 'At least one ingredient is required';
+    $errors['ingredients'] = 'Enter at least one ingredient';
   } else {
     // Sanitize and store the submitted ingredients value
     $ingredients = $_POST['ingredients'];

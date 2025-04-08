@@ -52,35 +52,42 @@ if (isset($_GET['id'])) {
 <!-- Include the header template file -->
 <?php include('templates/header.php'); ?>
 
-<div class="container center">
+<div class="container center grey-text">
 
   <!-- Check if the pizza details were retrieved successfully -->
   <?php if ($pizza) : ?>
-  <!-- Display the pizza title -->
-  <h4><?= htmlspecialchars($pizza['title']); ?></h4>
+    <!-- Display the pizza title -->
+    <h4><?= htmlspecialchars($pizza['title']); ?></h4>
 
-  <!-- Display the creator's email -->
-  <p>Created by <?= htmlspecialchars($pizza['email']); ?></p>
+    <!-- Display the creator's email -->
+    <p>Created by <?= htmlspecialchars($pizza['email']); ?></p>
 
-  <!-- Display the date when the pizza was created -->
-  <p><?= date($pizza['created_at']); ?></p>
+    <!-- Display the date when the pizza was created -->
+    <p><?= date($pizza['created_at']); ?></p>
 
-  <!-- Display the ingredients list -->
-  <h5>Ingredients:</h5>
-  <p><?= htmlspecialchars($pizza['ingredients']); ?></p>
+    <!-- Display the ingredients list -->
+    <h5>Ingredients:</h5>
+    <p><?= htmlspecialchars($pizza['ingredients']); ?></p>
 
-  <!-- Delete Form -->
-  <form action="details.php" method="POST">
-    <!-- Hidden input field to pass the pizza ID to delete -->
-    <input type="hidden" name="id_to_delete" value="<?= $pizza['id']; ?>">
+    <div class="edit_and_delete">
 
-    <!-- Submit button to trigger the deletion -->
-    <input type="submit" name="delete" value="Delete" class="btn brand z-depth-0">
-  </form>
+      <!-- Edit -->
+      <a href="edit.php?id=<?= $pizza['id']; ?>" class="btn brand z-depth-0">Edit</a>
+
+      <!-- Delete Form -->
+      <form action="details.php" method="POST">
+        <!-- Hidden input field to pass the pizza ID to delete -->
+        <input type="hidden" name="id_to_delete" value="<?= $pizza['id']; ?>">
+
+        <!-- Submit button to trigger the deletion -->
+        <input type="submit" name="delete" value="Delete" class="btn brand z-depth-0">
+      </form>
+
+    </div>
 
   <?php else : ?>
-  <!-- Display a message if the pizza was not found -->
-  <h5>No such pizza exists.</h5>
+    <!-- Display a message if the pizza was not found -->
+    <h5>No such pizza exists.</h5>
   <?php endif; ?>
 
 </div>

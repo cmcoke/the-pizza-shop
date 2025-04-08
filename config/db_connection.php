@@ -1,7 +1,7 @@
 <?php
 
 // Connect to the database using MySQLi with the specified host, username, password, and database name
-$conn = mysqli_connect('localhost', 'admin', 'test1234', 'pizza_shop');
+$conn = mysqli_connect('localhost', 'admin', '123456', 'pizza_shop');
 
 // Check if the database connection was successful
 if (!$conn) {

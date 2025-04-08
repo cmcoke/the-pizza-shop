@@ -37,25 +37,26 @@ mysqli_close($conn);
     <!-- Loop through each pizza in the $pizzas array and display it -->
     <?php foreach ($pizzas as $pizza) : ?>
 
-    <!-- Create a column for each pizza card -->
-    <div class="col s6 md3">
-      <div class="card z-depth-0">
-        <div class="card-content center">
-          <!-- Display the pizza title, escaping any HTML characters -->
-          <h6><?= htmlspecialchars($pizza['title']); ?></h6>
-          <ul>
-            <!-- Loop through each ingredient in the pizza and display it as a list item -->
-            <?php foreach (explode(',', $pizza['ingredients']) as $ingredent) : ?>
-            <li><?= htmlspecialchars($ingredent); ?></li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-        <div class="card-action right-align">
-          <!-- Link to the details page for the specific pizza, passing the pizza ID as a query parameter -->
-          <a href="details.php?id=<?= $pizza['id']; ?>" class="brand-text">more info</a>
+      <!-- Create a column for each pizza card -->
+      <div class="col s6 md3">
+        <div class="card z-depth-0">
+          <img src="img/pizza.svg" class="pizza">
+          <div class="card-content center">
+            <!-- Display the pizza title, escaping any HTML characters -->
+            <h6><?= htmlspecialchars($pizza['title']); ?></h6>
+            <ul>
+              <!-- Loop through each ingredient in the pizza and display it as a list item -->
+              <?php foreach (explode(',', $pizza['ingredients']) as $ingredent) : ?>
+                <li><?= htmlspecialchars($ingredent); ?></li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+          <div class="card-action right-align">
+            <!-- Link to the details page for the specific pizza, passing the pizza ID as a query parameter -->
+            <a href="details.php?id=<?= $pizza['id']; ?>" class="brand-text">more info</a>
+          </div>
         </div>
       </div>
-    </div>
 
     <?php endforeach; ?>
 
